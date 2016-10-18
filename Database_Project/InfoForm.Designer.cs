@@ -32,8 +32,9 @@
             this.titleOfMovie = new System.Windows.Forms.TextBox();
             this.mainActors = new System.Windows.Forms.TextBox();
             this.movieGenre = new System.Windows.Forms.TextBox();
-            this.streamingService = new System.Windows.Forms.TextBox();
             this.rating = new System.Windows.Forms.TextBox();
+            this.streamingService = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.streamingService)).BeginInit();
             this.SuspendLayout();
             // 
             // descriptionOfMovie
@@ -76,17 +77,6 @@
             this.movieGenre.TabIndex = 3;
             this.movieGenre.Text = "This textbox will be the genre of the movie. ";
             // 
-            // streamingService
-            // 
-            this.streamingService.Location = new System.Drawing.Point(12, 466);
-            this.streamingService.Multiline = true;
-            this.streamingService.Name = "streamingService";
-            this.streamingService.ReadOnly = true;
-            this.streamingService.Size = new System.Drawing.Size(593, 136);
-            this.streamingService.TabIndex = 4;
-            this.streamingService.Text = "This textbox will have a picture of the streaming service along with a clickable " +
-    "link to the website.";
-            // 
             // rating
             // 
             this.rating.Location = new System.Drawing.Point(34, 308);
@@ -97,14 +87,22 @@
             this.rating.TabIndex = 5;
             this.rating.Text = "This textbox will be the rating of the movie. ";
             // 
+            // streamingService
+            // 
+            this.streamingService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.streamingService.Location = new System.Drawing.Point(34, 434);
+            this.streamingService.Name = "streamingService";
+            this.streamingService.Size = new System.Drawing.Size(571, 150);
+            this.streamingService.TabIndex = 6;
+            // 
             // InfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(617, 614);
-            this.Controls.Add(this.rating);
             this.Controls.Add(this.streamingService);
+            this.Controls.Add(this.rating);
             this.Controls.Add(this.movieGenre);
             this.Controls.Add(this.mainActors);
             this.Controls.Add(this.titleOfMovie);
@@ -113,6 +111,7 @@
             this.Name = "InfoForm";
             this.Text = "InfoForm";
             this.Load += new System.EventHandler(this.InfoForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.streamingService)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -124,7 +123,7 @@
         private System.Windows.Forms.TextBox titleOfMovie;
         private System.Windows.Forms.TextBox mainActors;
         private System.Windows.Forms.TextBox movieGenre;
-        private System.Windows.Forms.TextBox streamingService;
         private System.Windows.Forms.TextBox rating;
+        private System.Windows.Forms.DataGridView streamingService;
     }
 }

@@ -12,7 +12,7 @@ namespace Database_Project
 {
     public partial class InfoForm : Form
     {
-        public InfoForm()
+        public InfoForm()//add Param for passed data
         {
             InitializeComponent();
         }

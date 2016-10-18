@@ -133,6 +133,7 @@
             this.Controls.Add(this.Data);
             this.Name = "Main";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Data)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

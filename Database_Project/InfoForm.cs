@@ -16,5 +16,10 @@ namespace Database_Project
         {
             InitializeComponent();
         }
+
+        private void InfoForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

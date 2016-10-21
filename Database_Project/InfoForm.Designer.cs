@@ -30,9 +30,9 @@
         {
             this.descriptionOfMovie = new System.Windows.Forms.TextBox();
             this.titleOfMovie = new System.Windows.Forms.TextBox();
-            this.mainActors = new System.Windows.Forms.TextBox();
+            this.mainActor = new System.Windows.Forms.TextBox();
             this.movieGenre = new System.Windows.Forms.TextBox();
-            this.rating = new System.Windows.Forms.TextBox();
+            this.ratingOfMovie = new System.Windows.Forms.TextBox();
             this.streamingService = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.streamingService)).BeginInit();
             this.SuspendLayout();
@@ -57,15 +57,15 @@
             this.titleOfMovie.TabIndex = 1;
             this.titleOfMovie.Text = "This textbox will be the title of the movie. ";
             // 
-            // mainActors
+            // mainActor
             // 
-            this.mainActors.Location = new System.Drawing.Point(34, 153);
-            this.mainActors.Multiline = true;
-            this.mainActors.Name = "mainActors";
-            this.mainActors.ReadOnly = true;
-            this.mainActors.Size = new System.Drawing.Size(239, 51);
-            this.mainActors.TabIndex = 2;
-            this.mainActors.Text = "This textbox will be the main actors of the movie. ";
+            this.mainActor.Location = new System.Drawing.Point(34, 153);
+            this.mainActor.Multiline = true;
+            this.mainActor.Name = "mainActor";
+            this.mainActor.ReadOnly = true;
+            this.mainActor.Size = new System.Drawing.Size(239, 51);
+            this.mainActor.TabIndex = 2;
+            this.mainActor.Text = "This textbox will be the main actors of the movie. ";
             // 
             // movieGenre
             // 
@@ -77,15 +77,15 @@
             this.movieGenre.TabIndex = 3;
             this.movieGenre.Text = "This textbox will be the genre of the movie. ";
             // 
-            // rating
+            // ratingOfMovie
             // 
-            this.rating.Location = new System.Drawing.Point(34, 308);
-            this.rating.Multiline = true;
-            this.rating.Name = "rating";
-            this.rating.ReadOnly = true;
-            this.rating.Size = new System.Drawing.Size(239, 56);
-            this.rating.TabIndex = 5;
-            this.rating.Text = "This textbox will be the rating of the movie. ";
+            this.ratingOfMovie.Location = new System.Drawing.Point(34, 308);
+            this.ratingOfMovie.Multiline = true;
+            this.ratingOfMovie.Name = "ratingOfMovie";
+            this.ratingOfMovie.ReadOnly = true;
+            this.ratingOfMovie.Size = new System.Drawing.Size(239, 56);
+            this.ratingOfMovie.TabIndex = 5;
+            this.ratingOfMovie.Text = "This textbox will be the rating of the movie. ";
             // 
             // streamingService
             // 
@@ -102,9 +102,9 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(617, 614);
             this.Controls.Add(this.streamingService);
-            this.Controls.Add(this.rating);
+            this.Controls.Add(this.ratingOfMovie);
             this.Controls.Add(this.movieGenre);
-            this.Controls.Add(this.mainActors);
+            this.Controls.Add(this.mainActor);
             this.Controls.Add(this.titleOfMovie);
             this.Controls.Add(this.descriptionOfMovie);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -121,9 +121,9 @@
 
         private System.Windows.Forms.TextBox descriptionOfMovie;
         private System.Windows.Forms.TextBox titleOfMovie;
-        private System.Windows.Forms.TextBox mainActors;
+        private System.Windows.Forms.TextBox mainActor;
         private System.Windows.Forms.TextBox movieGenre;
-        private System.Windows.Forms.TextBox rating;
+        private System.Windows.Forms.TextBox ratingOfMovie;
         private System.Windows.Forms.DataGridView streamingService;
     }
 }

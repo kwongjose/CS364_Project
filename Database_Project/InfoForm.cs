@@ -19,7 +19,11 @@ namespace Database_Project
 
         private void InfoForm_Load(object sender, EventArgs e)
         {
-
+            String title = titleOfMovie.Text;
+            String actor = mainActor.Text;
+            String genre = movieGenre.Text;
+            String rating = ratingOfMovie.Text;
+            String description = descriptionOfMovie.Text;
         }
     }
 }

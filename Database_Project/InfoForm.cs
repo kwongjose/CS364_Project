@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Database_Project
 {
-    public partial class Form1 : Form
+    public partial class InfoForm : Form
     {
-        public Form1()
+        public InfoForm()//add Param for passed data
         {
             InitializeComponent();
+        }
+
+        private void InfoForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

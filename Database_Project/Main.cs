@@ -61,5 +61,13 @@ namespace Database_Project
         {
 
         }
+        /*
+         * Calls the DB and repopulates the gridview
+         * 
+         */ 
+        private void reset_view_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

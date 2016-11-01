@@ -14,9 +14,13 @@ namespace Database_Project
         [STAThread]
         static void Main()
         {
+            PullAPI test = new Database_Project.PullAPI( "0137523" );
+            String output = test.returnCall();
+            System.Diagnostics.Debug.WriteLine( output );
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Main());
+            
         }
     }
 }

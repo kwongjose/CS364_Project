@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Database_Project {
     //Pulls data from API in JSON format, passes to caller in same form
-    public class PullAPI {
+    public class PullMovieAPI {
         private String[] movieTitle;
         private String movieYear, imdbID;
         private Movie movie;
@@ -15,7 +15,7 @@ namespace Database_Project {
         private readonly char[] delims = { '\'', ' ', ',', '.', ':', '\t', '(', ')', '"', };
 
         //Constructs object to return JSON data from omdbapi.com using title and year
-        public PullAPI( String title, String year ) {
+        public PullMovieAPI( String title, String year ) {
             movieTitle = title.Split( delims, StringSplitOptions.RemoveEmptyEntries );
             movieYear = year;
             Task<String> jTask = Task.Run( () => CallAPI() ); // => is lambda operator
@@ -25,7 +25,7 @@ namespace Database_Project {
         }
 
         //Constructs object to return JSON data from omdbapi.com using IMDB ID
-        public PullAPI( String idNum ) {
+        public PullMovieAPI( String idNum ) {
             imdbID = idNum;
             Task<String> jTask = Task.Run( () => CallAPI() ); // => is lambda operator
             jTask.Wait();

@@ -26,8 +26,7 @@ namespace Database_Project {
              */ 
             public ConnectionClass()
         {
-            sqlConnection = new SQLiteConnection(ConString);
-            sqlConnection.Open();
+            
         }
 
      

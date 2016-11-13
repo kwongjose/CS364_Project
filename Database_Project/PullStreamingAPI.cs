@@ -128,13 +128,16 @@ namespace Database_Project {
 
             return movie.metacritic;
         }
-        
+
         //Return primary genre of movie
         public String getFirstGenre() {
             if ( movie.genres.Count == 0 ) {
                 return "";
             }
-            return movie.genres[ 0 ].title;
+            if ( movie.genres.Count < 2 || movie.genres[ 1 ].title == null ) {
+                return movie.genres[ 0 ].title;
+            }
+            return movie.genres[ 0 ].title + ", " + movie.genres[ 1 ].title;
         }
 
         //If movie has more than one genre, return second.  Else return blank string.
@@ -251,28 +254,6 @@ namespace Database_Project {
     }
 
     //To be used with RootFromID
-    public class SubscriptionIosSource {
-        public string source { get; set; }
-        public string display_name { get; set; }
-        public string link { get; set; }
-        public string app_name { get; set; }
-        public int app_link { get; set; }
-        public int app_required { get; set; }
-        public string app_download_link { get; set; }
-    }
-
-    //To be used with RootFromID
-    public class SubscriptionAndroidSource {
-        public string source { get; set; }
-        public string display_name { get; set; }
-        public string link { get; set; }
-        public string app_name { get; set; }
-        public int app_link { get; set; }
-        public int app_required { get; set; }
-        public string app_download_link { get; set; }
-    }
-
-    //To be used with RootFromID
     public class Format {
         public string price { get; set; }
         public string format { get; set; }
@@ -297,18 +278,6 @@ namespace Database_Project {
     }
 
     //To be used with RootFromID
-    public class PurchaseIosSource {
-        public string source { get; set; }
-        public string display_name { get; set; }
-        public string link { get; set; }
-        public string app_name { get; set; }
-        public int app_link { get; set; }
-        public int app_required { get; set; }
-        public string app_download_link { get; set; }
-        public List<Format2> formats { get; set; }
-    }
-
-    //To be used with RootFromID
     public class Format3 {
         public string price { get; set; }
         public string format { get; set; }
@@ -316,17 +285,6 @@ namespace Database_Project {
         public bool pre_order { get; set; }
     }
 
-    //To be used with RootFromID
-    public class PurchaseAndroidSource {
-        public string source { get; set; }
-        public string display_name { get; set; }
-        public string link { get; set; }
-        public string app_name { get; set; }
-        public int app_link { get; set; }
-        public int app_required { get; set; }
-        public string app_download_link { get; set; }
-        public List<Format3> formats { get; set; }
-    }
 
     //All Data on movie including purchase sources, streaming subscription sources, actors, directors, reviews, plot...etc etc 
     public class RootFromID {
@@ -357,19 +315,8 @@ namespace Database_Project {
         public List<Writer> writers { get; set; }
         public List<Director> directors { get; set; }
         public List<Cast> cast { get; set; }
-        public List<object> free_web_sources { get; set; }
-        public List<object> free_ios_sources { get; set; }
-        public List<object> free_android_sources { get; set; }
-        public List<object> tv_everywhere_web_sources { get; set; }
-        public List<object> tv_everywhere_ios_sources { get; set; }
-        public List<object> tv_everywhere_android_sources { get; set; }
         public List<SubscriptionWebSource> subscription_web_sources { get; set; }
-        public List<SubscriptionIosSource> subscription_ios_sources { get; set; }
-        public List<SubscriptionAndroidSource> subscription_android_sources { get; set; }
         public List<PurchaseWebSource> purchase_web_sources { get; set; }
-        public List<PurchaseIosSource> purchase_ios_sources { get; set; }
-        public List<PurchaseAndroidSource> purchase_android_sources { get; set; }
-        public List<object> other_sources { get; set; }
         public string development_api_key { get; set; }
     }
 

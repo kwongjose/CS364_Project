@@ -86,8 +86,10 @@
             this.Streaming_Service.Items.AddRange(new object[] {
             "Hulu",
             "Netflix",
-            "Amazon",
-            "Google Play"});
+            "Amazon Prime",
+            "HBO Now",
+            "Starz",
+            "ShowTime"});
             this.Streaming_Service.Location = new System.Drawing.Point(460, 126);
             this.Streaming_Service.Name = "Streaming_Service";
             this.Streaming_Service.Size = new System.Drawing.Size(121, 21);

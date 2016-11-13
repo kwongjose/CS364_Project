@@ -11,22 +11,33 @@ using Newtonsoft.Json;
 
 namespace Database_Project {
     class ConnectionClass {
-        String dataSrc = "data source =";
-        SQLiteConnection sqlConnection;
+        String ConString = "Data Source=ProjectDB.sqlite;Version=3";
+        SQLiteConnection sqlConnection;//use this for your commands
 
         /*
          *Constructor for using the ConnectionClass.  Must be "<name>.sqlite"
          * If you are using a database that is already made, the easiest way is to have it located in the Database_Project/bin/Debug folder. 
          * No path needs to be spcified if the file is located here.  Testing has not been done on specifiying a path to the file.
          */
-        public ConnectionClass( String fileName ) {
-            if ( !( File.Exists( fileName ) ) ) {
-                SQLiteConnection.CreateFile( fileName );
-            }
 
-            dataSrc = dataSrc + fileName + ";Version=3;";
+            /*
+             * contructor
+             * 
+             */ 
+            public ConnectionClass()
+        {
+            sqlConnection = new SQLiteConnection(ConString);
+            sqlConnection.Open();
+        }
 
-            sqlConnection = new SQLiteConnection( dataSrc );
+     
+
+        public void BuildTables(  ) {
+           
+
+            
+
+            sqlConnection = new SQLiteConnection( ConString );
             sqlConnection.Open();
 
             String CreateMovieTable = "Create Table IF NOT EXISTS Movie  (Mid Integer PRIMARY KEY, IMDBid Text, Title Text, GenrePrimary Text, GenreSecondary Text, DirectorFirst Text, DirectorSecond Text, MetaCriticLink text, Rating Text, Plot Text, Length Integer, Year Integer )";
@@ -224,6 +235,23 @@ namespace Database_Project {
             sqlConnection.Close();
             sqlConnection.Dispose();
         }
+
+        //check connection to DB
+        public bool CheckCon()
+        {
+            SQLiteConnection con = new SQLiteConnection(ConString);
+            con.Open();
+            SQLiteCommand com = new SQLiteCommand("SELECT * FROM Movie", con);
+
+            SQLiteDataReader dr = com.ExecuteReader();
+
+            while (dr.HasRows)
+            {
+
+                return true;
+            }
+            return false;
+        }
     }
 
     public class StreamingResult {
@@ -237,4 +265,5 @@ namespace Database_Project {
         public List<StreamingResult> results { get; set; }
     }
 
+   
 }

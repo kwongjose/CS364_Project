@@ -11,25 +11,37 @@ using Newtonsoft.Json;
 
 namespace Database_Project {
     class ConnectionClass {
-        String dataSrc = "data source =";
-        SQLiteConnection sqlConnection;
+        String ConString = "Data Source=ProjectDB.sqlite;Version=3";
+        SQLiteConnection sqlConnection;//use this for your commands
 
         /*
          *Constructor for using the ConnectionClass.  Must be "<name>.sqlite"
          * If you are using a database that is already made, the easiest way is to have it located in the Database_Project/bin/Debug folder. 
          * No path needs to be spcified if the file is located here.  Testing has not been done on specifiying a path to the file.
          */
-        public ConnectionClass( String fileName ) {
-            if ( !( File.Exists( fileName ) ) ) {
-                SQLiteConnection.CreateFile( fileName );
-            }
 
-            dataSrc = dataSrc + fileName + ";Version=3;";
+            /*
+             * contructor
+             * 
+             */ 
+            public ConnectionClass()
+        {
+            
+        }
 
-            sqlConnection = new SQLiteConnection( dataSrc );
+     
+
+        public void BuildTables(  ) {
+           
+
+            
+
+            sqlConnection = new SQLiteConnection( ConString );
             sqlConnection.Open();
 
-            String CreateMovieTable = "Create Table IF NOT EXISTS Movie  (Mid Integer PRIMARY KEY, IMDBid Text, Title Text, GenrePrimary Text, GenreSecondary Text, DirectorFirst Text, DirectorSecond Text, MetaCriticLink text, Rating Text, Plot Text, Length Integer, Year Integer )";
+            //String CreateMovieTable = "Create Table IF NOT EXISTS Movie  (Mid Integer PRIMARY KEY, IMDBid Text, Title Text, GenrePrimary Text, GenreSecondary Text, DirectorFirst Text, DirectorSecond Text, MetaCriticLink text, Rating Text, Plot Text, Length Integer, Year Integer, IMBD_Rating Text )";
+            //String CreateMovieTable = "Create Table IF NOT EXISTS Movie  (Mid Integer PRIMARY KEY, IMDBid Text, Title Text, GenrePrimary Text, GenreSecondary Text, DirectorFirst Text, MetaCriticLink text, Rating Text, Plot Text, Length Integer, Year Integer, IMBD_Rating Text )";
+            String CreateMovieTable = "Create Table IF NOT EXISTS Movie  (Mid Integer PRIMARY KEY, IMDBid Text, Title Text, GenrePrimary Text, DirectorFirst Text, MetaCriticLink text, Rating Text, Plot Text, Length Integer, Year Integer, IMBD_Rating Text )";
             SQLiteCommand command = new SQLiteCommand( CreateMovieTable, sqlConnection );
             command.ExecuteNonQuery();
 
@@ -52,29 +64,33 @@ namespace Database_Project {
             command.Dispose();
         }
 
-        public void insertMovie( int movieID, String imdbID, String title, String genrePrimary, String genreSecondary, String directorFirst, String directorSecond, String metacriticLink, String rating, String plot, int length, int year ) {
-            String insertIntoMovie = "INSERT INTO Movie VALUES ( @Mid, @IMDBid, @Title, @GenrePrimary, @GenreSecondary, @DirectorFirst, @DirectorSecond, @MetaCriticLink, @Rating, @Plot, @Length, @Year )";
-            try {
-                SQLiteCommand command = new SQLiteCommand( insertIntoMovie, sqlConnection );
+        public void insertMovie( int movieID, String imdbID, String title, String genrePrimary, String directorFirst, String metacriticLink, String rating, String plot, int length, int year, String imdbRating ) {
+            //String insertIntoMovie = "INSERT INTO Movie VALUES ( @Mid, @IMDBid, @Title, @GenrePrimary, @GenreSecondary, @DirectorFirst, @DirectorSecond, @MetaCriticLink, @Rating, @Plot, @Length, @Year, @IMBD_Rating )";
+            String insertIntoMovie = "INSERT INTO Movie VALUES ( @Mid, @IMDBid, @Title, @GenrePrimary, @DirectorFirst, @MetaCriticLink, @Rating, @Plot, @Length, @Year, @IMBD_Rating )";
+                try {
+                SQLiteCommand command = new SQLiteCommand( "PRAGMA foreign_keys = ON", sqlConnection );
+                command.ExecuteNonQuery();
+                command = new SQLiteCommand( insertIntoMovie, sqlConnection );
 
                 command.Parameters.AddWithValue( "@Mid", movieID );
                 command.Parameters.AddWithValue( "@IMDBid", imdbID );
                 command.Parameters.AddWithValue( "@Title", title );
                 command.Parameters.AddWithValue( "@GenrePrimary", genrePrimary );
-                command.Parameters.AddWithValue( "@GenreSecondary", genreSecondary );
+                //command.Parameters.AddWithValue( "@GenreSecondary", genreSecondary );
                 command.Parameters.AddWithValue( "@DirectorFirst", directorFirst );
-                command.Parameters.AddWithValue( "@DirectorSecond", directorSecond );
+                //command.Parameters.AddWithValue( "@DirectorSecond", directorSecond );
                 command.Parameters.AddWithValue( "@MetaCriticLink", metacriticLink );
                 command.Parameters.AddWithValue( "@Rating", rating );
                 command.Parameters.AddWithValue( "@Plot", plot );
                 command.Parameters.AddWithValue( "@Length", length );
                 command.Parameters.AddWithValue( "@Year", year );
+                command.Parameters.AddWithValue( "@IMBD_Rating", imdbRating );
 
                 command.ExecuteNonQuery();
                 command.Dispose();
             } catch ( SQLiteException e ) {
                 //do nothing
-
+                System.Diagnostics.Debug.WriteLine( e.Message);
             }
 
         }
@@ -82,7 +98,9 @@ namespace Database_Project {
         public void insertActor( int aID, String name, String imbdID ) {
             String insertIntoActor = "INSERT INTO Actor VALUES ( @Aid, @Name, @IMDBid )";
             try {
-                SQLiteCommand command = new SQLiteCommand( insertIntoActor, sqlConnection );
+                SQLiteCommand command = new SQLiteCommand( "PRAGMA foreign_keys = ON", sqlConnection );
+                command.ExecuteNonQuery();
+                command = command = new SQLiteCommand( insertIntoActor, sqlConnection );
 
                 command.Parameters.AddWithValue( "@Aid", aID );
                 command.Parameters.AddWithValue( "@Name", name );
@@ -100,8 +118,9 @@ namespace Database_Project {
         public void insertStarsIn( int mID, int aID, String characterName ) {
             String insertIntoStarsIn = " INSERT INTO StarsIn VALUES ( @MovieID, @ActorID, @CharacterName )";
 
-
-            SQLiteCommand command = new SQLiteCommand( insertIntoStarsIn, sqlConnection );
+            SQLiteCommand command = new SQLiteCommand( "PRAGMA foreign_keys = ON", sqlConnection );
+            command.ExecuteNonQuery();
+            command = new SQLiteCommand( insertIntoStarsIn, sqlConnection );
             try {
                 command.Parameters.AddWithValue( "@MovieID", mID );
                 command.Parameters.AddWithValue( "@ActorID", aID );
@@ -133,8 +152,8 @@ namespace Database_Project {
                 StreamingObjectRoot services = JsonConvert.DeserializeObject<StreamingObjectRoot>( result );
 
                 foreach ( StreamingResult element in services.results ) {
-                    //Remove if statement to obtain fuill list of subscription services
-                    if ( element.source == "showtime_subscription" || element.source == "netflix" || element.source == "hbo_now" || element.source == "starz_subscription" || element.source == "hulu_plus" || element.source == "amazon_prime" ) {
+                    //Remove if statement to obtain full list of subscription services
+                    //if ( element.source == "showtime_subscription" || element.source == "netflix" || element.source == "hbo_now" || element.source == "starz_subscription" || element.source == "hulu_plus" || element.source == "amazon_prime" ) {
                         String source = element.source;
                         String name = element.display_name;
                         String webURL = element.info;
@@ -156,7 +175,7 @@ namespace Database_Project {
 
                         }
 
-                    }
+                    //}
                 }
             }
         }
@@ -168,7 +187,9 @@ namespace Database_Project {
             String insertIntoStreamsOn = "INSERT INTO StreamsOn VALUES (@MovieID, @Source, @Link)";
 
             try {
-                SQLiteCommand command = new SQLiteCommand( insertIntoStreamsOn, sqlConnection );
+                SQLiteCommand command = new SQLiteCommand( "PRAGMA foreign_keys = ON", sqlConnection );
+                command.ExecuteNonQuery();
+                command = command = new SQLiteCommand( insertIntoStreamsOn, sqlConnection );
 
                 command.Parameters.AddWithValue( "@MovieID", movieID );
                 command.Parameters.AddWithValue( "@Source", source );
@@ -185,14 +206,16 @@ namespace Database_Project {
         }
 
         public void addMovieWithTitle( String movieTitle ) {
-            PullStreamingAPI getID = new Database_Project.PullStreamingAPI( movieTitle, null );
-            PullStreamingAPI api = new Database_Project.PullStreamingAPI( getID.returnID() );
+            PullStreamingAPI getID = new PullStreamingAPI( movieTitle, null );
+            PullStreamingAPI api = new PullStreamingAPI( getID.returnID() );
+            PullMovieAPI ratingAppend = new PullMovieAPI( api.returnIMDB());
 
-            try {
-                insertMovie( Int32.Parse( api.returnID() ), api.returnIMDB(), api.returnTitle(), api.getFirstGenre(), api.getSecondGenre(), api.returnFirstDirector(), api.returnSecondDirector(), api.returnMetaCritic(), api.returnRating(), api.returnPlot(), ( int )api.returnLength(), api.returnYear() );
-            }catch ( FormatException e ) {
-                System.Diagnostics.Debug.WriteLine( api.returnID() + " THIS WAS THE EXCEPTION"  );
-            }
+            //try {
+                //System.Diagnostics.Debug.WriteLine( ( api.returnID() )+ " "+ api.returnIMDB()+ " " + api.returnTitle()+ " " + api.getFirstGenre()+ " " + api.getSecondGenre()+ " " + api.returnFirstDirector()+ " " + api.returnSecondDirector()+ " " + api.returnMetaCritic()+ api.returnRating()+ " " + api.returnPlot()+ " " + ( int )api.returnLength()+ " " + api.returnYear()+ " " + ratingAppend.returnIMDBRating() + " THIS WAS THE EXCEPTION" );
+                insertMovie( Int32.Parse( api.returnID() ), api.returnIMDB(), api.returnTitle(), api.getFirstGenre(), api.returnFirstDirector(), api.returnMetaCritic(), api.returnRating(), api.returnPlot(), ( int )api.returnLength(), api.returnYear(), ratingAppend.returnIMDBRating() );
+            //}catch ( FormatException e ) {
+                //System.Diagnostics.Debug.WriteLine( api.returnID() + " THIS WAS THE EXCEPTION"  );
+            //}
 
             List<Cast> actors = api.returnCast();
 
@@ -224,6 +247,23 @@ namespace Database_Project {
             sqlConnection.Close();
             sqlConnection.Dispose();
         }
+
+        //check connection to DB
+        public bool CheckCon()
+        {
+            SQLiteConnection con = new SQLiteConnection(ConString);
+            con.Open();
+            SQLiteCommand com = new SQLiteCommand("SELECT * FROM Movie", con);
+
+            SQLiteDataReader dr = com.ExecuteReader();
+
+            while (dr.HasRows)
+            {
+
+                return true;
+            }
+            return false;
+        }
     }
 
     public class StreamingResult {
@@ -237,4 +277,5 @@ namespace Database_Project {
         public List<StreamingResult> results { get; set; }
     }
 
+   
 }

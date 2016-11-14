@@ -293,6 +293,88 @@ namespace Database_Project {
             catch (SQLiteException e) { System.Console.WriteLine("Database interaction failure.  Don't feel bad, you tried, and that's what counts.");}
             return movieTable;
         }
+        /*
+         * method takes and int as a movie id and returns a movie object
+         * 
+         */ 
+        public Movie GetMovieByID(int ID)
+        {
+            sqlConnection = new SQLiteConnection(ConString);
+            sqlConnection.Open();
+            String GetMovie = "SELECT * FROM Movie WHERE MID = @M_ID";
+            SQLiteCommand com = new SQLiteCommand(GetMovie, sqlConnection);
+            com.Parameters.AddWithValue("@M_ID", ID);
+
+            SQLiteDataReader dr = com.ExecuteReader();
+            
+            if (dr.HasRows)
+            {
+                Movie mov = new Movie();
+                dr.Read();
+
+                mov.Title = (string)dr["Title"];
+                mov.Plot = (string)dr["plot"];
+                mov.imdbRating = (string)dr["IMDBRating"];
+                mov.Rated = (string)dr["MPAARating"];
+                mov.Genre = (string)dr["Genre"];
+
+                List<string> AList = GetActorsByMID(ID);
+
+                //mov.Actors = AList.ToArray().ToString();
+                String s = "";
+                AList.ForEach(i => s += i + ",");
+                mov.Actors = s;
+                sqlConnection.Close();
+                return mov;  
+            }
+            sqlConnection.Close();
+            return null;
+        }
+
+        /*
+         * Get a list of Actors for a given MovieID
+         * 
+         */
+         public List<string> GetActorsByMID(int Mid)
+        {
+            sqlConnection = new SQLiteConnection(ConString);
+            sqlConnection.Open();
+            String GetActorID = "SELECT * FROM StarsIN WHERE MID = @Mid";
+            SQLiteCommand com = new SQLiteCommand(GetActorID, sqlConnection);
+            
+            com.Parameters.AddWithValue("@Mid", Mid);
+
+            SQLiteDataReader dr = com.ExecuteReader();
+            
+            List<string> Actors = new List<string>();
+            //get actor names for an id
+            while(dr.Read())
+            {
+                int Aid = int.Parse(dr["AID"].ToString() );
+                
+                string GetName = "SELECT Name FROM Actors WHERE AID = @ID";
+                SQLiteCommand coms = new SQLiteCommand(GetName, sqlConnection);
+                coms.Parameters.AddWithValue("@ID", Aid);
+                SQLiteDataReader ar = coms.ExecuteReader();
+                ar.Read();
+                Actors.Add((string)ar["Name"]);
+                coms.Dispose();
+                ar.Close();
+
+            }
+            sqlConnection.Close();
+            return Actors;
+        
+        }
+        
+        /*
+         *gets a list of streaming services for a given Movie by ID
+         * 
+         */
+         public List<String>  GetServicesByID(int MID)
+        {
+            return null;
+        }
     }
 
     public class StreamingResult {

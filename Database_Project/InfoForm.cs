@@ -15,6 +15,14 @@ namespace Database_Project
         public InfoForm(int MID)//add Param for passed data
         {
             InitializeComponent();
+            ConnectionClass con = new ConnectionClass();
+            Movie mov = con.GetMovieByID(MID);
+
+            titleOfMovie.Text = mov.Title;
+            movieGenre.Text = mov.Genre;
+            mainActor.Text = mov.Actors;
+            descriptionOfMovie.Text = mov.Plot;
+            ratingOfMovie.Text = mov.imdbRating + " " + mov.Rated;
         }
 
         private void InfoForm_Load(object sender, EventArgs e)

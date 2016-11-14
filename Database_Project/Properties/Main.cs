@@ -61,15 +61,38 @@ namespace Database_Project
 
         private void Main_Load(object sender, EventArgs e)
         {
-
+            // load movie data into grid
+            loadMovieGrid();
         }
+
+        //loads movie data into dataGridView Data
+        private void loadMovieGrid()
+        {
+            ConnectionClass connect = new ConnectionClass();
+            Data.DataSource = connect.loadMovieData();
+            connect.close();
+
+            //hide certain columns if they exist
+            if (Data.Columns.Contains("MID"))
+            {
+                Data.Columns["MID"].Visible = false;
+            }
+
+            if (Data.Columns.Contains("Plot"))
+            {
+                Data.Columns["Plot"].Visible = false;
+            }
+
+            Data.Update();
+        }
+
         /*
          * Calls the DB and repopulates the gridview
          * 
          */ 
         private void reset_view_Click(object sender, EventArgs e)
         {
-
+            loadMovieGrid();
         }
     }
 }

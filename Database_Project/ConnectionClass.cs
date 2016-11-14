@@ -13,7 +13,7 @@ namespace Database_Project {
     class ConnectionClass {
         String ConString = "Data Source=ProjectDB.sqlite;Version=3";
         SQLiteConnection sqlConnection;//use this for your commands
-
+        
         /*
          *Constructor for using the ConnectionClass.  Must be "<name>.sqlite"
          * If you are using a database that is already made, the easiest way is to have it located in the Database_Project/bin/Debug folder. 

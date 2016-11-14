@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Database_Project
 {
-    class Movie
+    class Movie1 //changed From 'Movie' since 'Movie' is already defined in the PullMovieAPI -Jeremy
     {
         public String Title { get; set; }
         public String Year { get; set; }

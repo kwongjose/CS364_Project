@@ -264,6 +264,29 @@ namespace Database_Project {
             }
             return false;
         }
+
+        //load movie table into a DataTable, returns said DataTable
+        public DataTable loadMovieData()
+        {
+            DataTable movieTable = new DataTable();
+            try
+            {
+                sqlConnection = new SQLiteConnection(ConString);
+                sqlConnection.Open();
+
+                System.Console.WriteLine("load movie");
+                string selectMovie = "SELECT * FROM Movie";
+
+                SQLiteCommand command = new SQLiteCommand(selectMovie, sqlConnection);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter();
+                adapter.SelectCommand = command;
+                adapter.Fill(movieTable);
+               
+                sqlConnection.Close();
+            }
+            catch (SQLiteException e) { System.Console.WriteLine("Database interaction failure.  Don't feel bad, you tried, and that's what counts.");}
+            return movieTable;
+        }
     }
 
     public class StreamingResult {

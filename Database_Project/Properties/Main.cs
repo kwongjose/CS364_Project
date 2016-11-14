@@ -15,7 +15,6 @@ namespace Database_Project
         public Main()
         {
             InitializeComponent();
-
           
         }
         /*
@@ -52,9 +51,13 @@ namespace Database_Project
             if(e.RowIndex >= 0) //check if the click is valid
             {
                 DataGridViewRow r = senderGrid.Rows[e.RowIndex];//get the row that was clicked on
-                if(e.ColumnIndex == 0)//check that the TITLE column was clicked
+                if(e.ColumnIndex == 1)//check that the TITLE column was clicked
                 {
+                    System.Console.WriteLine(r.Cells[0].Value.ToString());
+                    int MID = int.Parse(r.Cells[0].Value.ToString() );
 
+                    Form info = new InfoForm(MID);
+                    info.Show();
                 }
             }
         }
@@ -71,6 +74,7 @@ namespace Database_Project
             ConnectionClass connect = new ConnectionClass();
             Data.DataSource = connect.loadMovieData();
             connect.close();
+            
 
             //hide certain columns if they exist
             if (Data.Columns.Contains("MID"))

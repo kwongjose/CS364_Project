@@ -278,6 +278,8 @@ namespace Database_Project {
                 sqlConnection = new SQLiteConnection(ConString);
                 sqlConnection.Open();
 
+               
+
                 System.Console.WriteLine("load movie");
                 string selectMovie = "SELECT * FROM Movie";
 

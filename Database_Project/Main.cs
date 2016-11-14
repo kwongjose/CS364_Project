@@ -15,6 +15,8 @@ namespace Database_Project
         public Main()
         {
             InitializeComponent();
+
+          
         }
         /*
          * Sort Movies by Genres

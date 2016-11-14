@@ -21,9 +21,16 @@ namespace Database_Project {
         public PullStreamingAPI( String title, String year ) {
             //System.Diagnostics.Debug.WriteLine( title );
             movieTitle = title.Split( delims, StringSplitOptions.RemoveEmptyEntries );
-            Task<String> jTask = Task.Run( () => CallAPI() ); // => is lambda operator
+            Func<String, String> getId = delegate ( String rawResponse ) {
+                guideboxID = deserializeJsonForID( rawResponse );
+                Task<String> cb = Task.Run( () => CallAPI() );
+                cb.Wait();
+                deserializeJsonForInfo( cb.Result );
+                return cb.Result;
+            };
+            Task<String> jTask = Task.Run( () => CallAPI( getId ) ); // => is lambda operator
             jTask.Wait();
-            deserializeJsonForID( jTask.Result );
+            //deserializeJsonForID( jTask.Result );
             //Need to add functionality to pull with title and get ID based on year entered.
         }
 
@@ -37,16 +44,18 @@ namespace Database_Project {
         }
 
         //Primary method used to change from JSON formatted string to objects containing the data. 
-        private void deserializeJsonForInfo( string result ) {
+        private RootFromID deserializeJsonForInfo( string result ) {
             movie = JsonConvert.DeserializeObject<RootFromID>( result );
+            return movie;
         }
 
         //To be updated to allow for use of RootFromTitle object
-        private void deserializeJsonForID( string result ) {
+        private String deserializeJsonForID( string result ) {
             //Custom deserialization method for retrieving only the guidebox id from the returned data.  
             //Only works with data returned by title search. Only works on first movie returned by the search. 
             int start = result.IndexOf( "id\":" ) + 4;
             guideboxID = result.Substring( start, result.IndexOf( ',' ) - start );
+            return guideboxID;
         }
 
         //Determines which method to use to pull data from API
@@ -180,7 +189,7 @@ namespace Database_Project {
         }
 
         //Primary method to call API and retrieve data. 
-        private async Task<String> CallAPI() {
+        private async Task<String> CallAPI( Func<String,String> f=null) {
             using ( var target = new HttpClient() ) {
                 target.BaseAddress = new Uri( "https://api-public.guidebox.com/v1.43/US/rKnenTickYgokd108QuxoN8BAjkROnkc/" );
                 target.DefaultRequestHeaders.Accept.Add( new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue( "Application/json" ) );
@@ -192,7 +201,12 @@ namespace Database_Project {
                     using ( Stream responseData = await reply.Content.ReadAsStreamAsync() ) {
                         String result = new StreamReader( responseData ).ReadToEnd();
                         //System.Diagnostics.Debug.WriteLine( " RESPONSE SUCCESSFUL RESULT HAS A VALUE " );
-                        return result;
+                        if (f != null) {
+                            return f(result);
+                        }else {
+                            return result;
+                        }
+                        
                     }
                 }
             }

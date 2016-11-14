@@ -314,7 +314,7 @@ namespace Database_Project {
 
                 mov.Title = (string)dr["Title"];
                 mov.Plot = (string)dr["plot"];
-                mov.imdbRating = (string)dr["IMDBRating"];
+                mov.imdbRating = (string)dr["IMBDRating"];
                 mov.Rated = (string)dr["MPAARating"];
                 mov.Genre = (string)dr["Genre"];
 

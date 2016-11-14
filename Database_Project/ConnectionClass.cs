@@ -57,7 +57,7 @@ namespace Database_Project {
             command = new SQLiteCommand( CreateStrServiceTable, sqlConnection );
             command.ExecuteNonQuery();
 
-            String CreateStreamsOnTable = "Create Table IF NOT EXISTS StreamsOn ( MovieID Integer, Source Text, Link Text,  FOREIGN KEY(MovieID) REFERENCES Movie(Mid), FOREIGN KEY(Source) REFERENCES StreamingSource(Source), PRIMARY KEY( MovieID, Source ))";
+            String CreateStreamsOnTable = "Create Table IF NOT EXISTS StreamsOn ( MovieID Integer, Source Text, Link Text,  FOREIGN KEY(MovieID) REFERENCES Movie(Mid), FOREIGN KEY(Source) REFERENCES StreamingService(Source), PRIMARY KEY( MovieID, Source ))";
             command = new SQLiteCommand( CreateStreamsOnTable, sqlConnection );
             command.ExecuteNonQuery();
 
@@ -182,7 +182,7 @@ namespace Database_Project {
 
         public void insertStreamsOn( int movieID, String source, String link ) {
 
-            // StreamsOn ( MovieID Integer, Source Text, Link Text, FOREIGN KEY(MovieID) REFERENCES Movie(Mid), FOREIGN KEY(Source) REFERENCES StreamingSource(Source), PRIMARY KEY( MovieID, Source ))"
+           
 
             String insertIntoStreamsOn = "INSERT INTO StreamsOn VALUES (@MovieID, @Source, @Link)";
 

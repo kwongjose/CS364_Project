@@ -21,7 +21,7 @@ namespace Database_Project {
             Task<String> jTask = Task.Run( () => CallAPI() ); // => is lambda operator
             jTask.Wait();
             deserializeJson( jTask.Result );
-            System.Diagnostics.Debug.WriteLine( movie.Title );
+            //System.Diagnostics.Debug.WriteLine( movie.Title );
         }
 
         //Constructs object to return JSON data from omdbapi.com using IMDB ID

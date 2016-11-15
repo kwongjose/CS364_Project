@@ -57,8 +57,6 @@ namespace Database_Project
                     dt.Rows.Add(dr);
 
                 }
-                streamingService.DataSource = dt;
-                streamingService.Columns["URL"].Visible = false;
                 
             }
             else
@@ -68,10 +66,10 @@ namespace Database_Project
                 e["URL"] = "";
                 dt.Rows.Add(e);
 
-                streamingService.DataSource = dt;
-                streamingService.Columns["URL"].Visible = false;
-                //No streaming optins
+              //No streaming optins
             }
+            streamingService.DataSource = dt;
+            streamingService.Columns["URL"].Visible = false;
         }
     }
 }

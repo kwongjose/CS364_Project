@@ -373,7 +373,33 @@ namespace Database_Project {
          */
          public List<String>  GetServicesByID(int MID)
         {
-            return null;
+            sqlConnection = new SQLiteConnection(ConString);
+            sqlConnection.Open();
+            String ServicsIDs = "SELECT Name FROM StreamsOn WHERE MID = @M_ID";
+
+            List<String> Services = new List<string>();
+            SQLiteCommand com = new SQLiteCommand(ServicsIDs, sqlConnection);
+            com.Parameters.AddWithValue("@M_ID", MID);
+            SQLiteDataReader dr = com.ExecuteReader();
+
+            String ServiceName = "SELECT  URL FROM StreamingService WHERE Name = @nam";
+
+            while(dr.Read())
+            {
+                String SName = (string)dr["Name"];
+                SQLiteCommand cmd = new SQLiteCommand(ServiceName, sqlConnection);
+                cmd.Parameters.AddWithValue("@nam", SName);
+                SQLiteDataReader drs = cmd.ExecuteReader();
+                drs.Read();
+                String URL = (string)drs["URL"];
+
+                cmd.Dispose();
+                drs.Close();
+
+                Services.Add(SName + "," + URL);
+
+            }
+            return Services;
         }
     }
 

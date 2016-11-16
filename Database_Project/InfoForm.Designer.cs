@@ -89,9 +89,12 @@
             // 
             // streamingService
             // 
+            this.streamingService.AllowUserToAddRows = false;
+            this.streamingService.AllowUserToDeleteRows = false;
             this.streamingService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.streamingService.Location = new System.Drawing.Point(34, 434);
             this.streamingService.Name = "streamingService";
+            this.streamingService.ReadOnly = true;
             this.streamingService.Size = new System.Drawing.Size(571, 150);
             this.streamingService.TabIndex = 6;
             // 

@@ -70,6 +70,7 @@ namespace Database_Project
             }
             streamingService.DataSource = dt;
             streamingService.Columns["URL"].Visible = false;
+            streamingService.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
     }
 }

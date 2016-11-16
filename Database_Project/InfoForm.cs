@@ -61,10 +61,8 @@ namespace Database_Project
             }
             else
             {
-                DataRow e = dt.NewRow();
-                e["Service"] = "NO OPTIONS";
-                e["URL"] = "";
-                dt.Rows.Add(e);
+                streamingService.Visible = false;
+                label1.Visible = true;
 
               //No streaming optins
             }

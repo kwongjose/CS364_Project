@@ -34,6 +34,7 @@
             this.movieGenre = new System.Windows.Forms.TextBox();
             this.ratingOfMovie = new System.Windows.Forms.TextBox();
             this.streamingService = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.streamingService)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,12 +100,23 @@
             this.streamingService.TabIndex = 6;
             this.streamingService.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.streamingService_CellContentClick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(301, 505);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "No Options";
+            this.label1.Visible = false;
+            // 
             // InfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(617, 614);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.streamingService);
             this.Controls.Add(this.ratingOfMovie);
             this.Controls.Add(this.movieGenre);
@@ -129,5 +141,6 @@
         private System.Windows.Forms.TextBox movieGenre;
         private System.Windows.Forms.TextBox ratingOfMovie;
         private System.Windows.Forms.DataGridView streamingService;
+        private System.Windows.Forms.Label label1;
     }
 }

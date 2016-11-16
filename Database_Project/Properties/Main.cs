@@ -73,7 +73,7 @@ namespace Database_Project
         {
             ConnectionClass connect = new ConnectionClass();
             Data.DataSource = connect.loadMovieData();
-            connect.close();
+            
             
 
             //hide certain columns if they exist

@@ -17,16 +17,15 @@ namespace Database_Project
             InitializeComponent();
             ConnectionClass con = new ConnectionClass();
             Movie mov = con.GetMovieByID(MID);
-            con.close();
+            
 
             titleOfMovie.Text = mov.Title;
             movieGenre.Text = mov.Genre;
             mainActor.Text = mov.Actors;
             descriptionOfMovie.Text = mov.Plot;
             ratingOfMovie.Text = mov.imdbRating + " " + mov.Rated;
-
-            List<String> services = con.GetServicesByID(MID);
-            buildServiceTable(services);
+            
+            buildServiceTable( con.GetServicesByID(MID) );
         }
 
         private void InfoForm_Load(object sender, EventArgs e)
@@ -37,7 +36,10 @@ namespace Database_Project
             String rating = ratingOfMovie.Text;
             String description = descriptionOfMovie.Text;
         }
-
+        /*
+         * takes a list of string in the form name,url
+         * 
+         */ 
         private void buildServiceTable(List<String> s)
         {
             DataTable dt = new DataTable();
@@ -49,11 +51,9 @@ namespace Database_Project
                 foreach(string t in s)
                 {
                     DataRow dr = dt.NewRow();
-
-                    string name = t.Substring(0, t.IndexOf(","));
-                    string URL = t.Substring(t.IndexOf(",") );
-                    dr["Service"] = name;
-                    dr["URL"] = URL;
+                    
+                    dr["Service"] = t.Substring(0, t.IndexOf(","));
+                    dr["URL"] = t.Substring(t.IndexOf(","));
                     dt.Rows.Add(dr);
 
                 }
@@ -71,6 +71,15 @@ namespace Database_Project
             streamingService.DataSource = dt;
             streamingService.Columns["URL"].Visible = false;
             streamingService.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        /*
+         * method for when a streaming service is clicked
+         * 
+         */ 
+        private void streamingService_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

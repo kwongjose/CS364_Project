@@ -97,6 +97,7 @@
             this.streamingService.ReadOnly = true;
             this.streamingService.Size = new System.Drawing.Size(571, 150);
             this.streamingService.TabIndex = 6;
+            this.streamingService.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.streamingService_CellContentClick);
             // 
             // InfoForm
             // 

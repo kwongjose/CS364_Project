@@ -253,21 +253,7 @@ namespace Database_Project {
             sqlConnection.Dispose();
         }
 
-        //check connection to DB
-        public bool CheckCon() {
-            //SQLiteConnection con = new SQLiteConnection( ConString );
-            //con.Open();
-            //Use Existing connection, please do not open a new connection. 
-            SQLiteCommand com = new SQLiteCommand( "SELECT * FROM Movie", sqlConnection );
-
-            SQLiteDataReader dr = com.ExecuteReader();
-
-            while ( dr.HasRows ) {
-
-                return true;
-            }
-            return false;
-        }
+      
 
         //load movie table into a DataTable, returns said DataTable
         public DataTable loadMovieData()
@@ -278,8 +264,6 @@ namespace Database_Project {
                 sqlConnection = new SQLiteConnection(ConString);
                 sqlConnection.Open();
 
-               
-
                 System.Console.WriteLine("load movie");
                 string selectMovie = "SELECT * FROM Movie";
 
@@ -289,6 +273,7 @@ namespace Database_Project {
                 adapter.Fill(movieTable);
                
                 sqlConnection.Close();
+                sqlConnection.Dispose();
             }
             catch (SQLiteException e) { System.Console.WriteLine("Database interaction failure.  Don't feel bad, you tried, and that's what counts.");}
             return movieTable;
@@ -320,14 +305,15 @@ namespace Database_Project {
 
                 List<string> AList = GetActorsByMID(ID);
 
-                //mov.Actors = AList.ToArray().ToString();
-                String s = "";
+                string s = "";
                 AList.ForEach(i => s += i + ",");
                 mov.Actors = s;
                 sqlConnection.Close();
+                sqlConnection.Dispose();
                 return mov;  
             }
             sqlConnection.Close();
+            sqlConnection.Dispose();
             return null;
         }
 
@@ -399,6 +385,7 @@ namespace Database_Project {
                 Services.Add(SName + "," + URL);
 
             }
+            dr.Close();
             return Services;
         }
     }

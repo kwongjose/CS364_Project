@@ -17,6 +17,7 @@ namespace Database_Project
             InitializeComponent();
           
         }
+
         /*
          * Sort Movies by Genres
          * 
@@ -24,15 +25,29 @@ namespace Database_Project
         private void Genres_SelectedIndexChanged(object sender, EventArgs e)
         {
             String Sel_Geners = Genres.Text;
+
+            DataTable dt = (DataTable)Data.DataSource;
+            DataRow[] dr = dt.Select("Genre LIKE '%" + Sel_Geners + "%' ");
+
+            if ( dr.Length > 0 )
+            {
+                dt = dr.CopyToDataTable();
+            }
+
+            Data.DataSource = dt;
+            Data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
         }
+
         /*
          * Sort by Streaming Service
          * 
-         */ 
+         */
         private void Streaming_Service_SelectedIndexChanged(object sender, EventArgs e)
         {
             String SS = Streaming_Service.Text;
         }
+
         /*
          * Search by Title or Actor
          * 
@@ -41,10 +56,11 @@ namespace Database_Project
         {
             String Title_Actor = textBox1.Text;
         }
+        
         /*
          * Opens a window that show info on a movie
          * 
-         */ 
+         */
         private void Data_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;//cast the sender to a gridview
@@ -61,6 +77,7 @@ namespace Database_Project
                 }
             }
         }
+        
 
         private void Main_Load(object sender, EventArgs e)
         {

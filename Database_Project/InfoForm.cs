@@ -77,7 +77,18 @@ namespace Database_Project
          */ 
         private void streamingService_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            var senderGrid = (DataGridView)sender;//cast the sender to a gridview
+            if (e.RowIndex >= 0) //check if the click is valid
+            {
+                DataGridViewRow r = senderGrid.Rows[e.RowIndex];//get the row that was clicked on
+                if (e.ColumnIndex == 0)//check that the TITLE column was clicked
+                {
+                    System.Console.WriteLine(r.Cells[1].Value.ToString());
+                    string url = r.Cells[1].Value.ToString();
+                    url = url.TrimStart(',');
+                    System.Diagnostics.Process.Start(url);
+                }
+            }
         }
     }
 }

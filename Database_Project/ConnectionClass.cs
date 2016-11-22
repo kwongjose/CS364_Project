@@ -278,10 +278,12 @@ namespace Database_Project {
             catch (SQLiteException e) { System.Console.WriteLine("Database interaction failure.  Don't feel bad, you tried, and that's what counts.");}
             return movieTable;
         }
+
+
         /*
          * method takes and int as a movie id and returns a movie object
          * 
-         */ 
+         */
         public Movie GetMovieByID(int ID)
         {
             sqlConnection = new SQLiteConnection(ConString);
@@ -400,6 +402,5 @@ namespace Database_Project {
     public class StreamingObjectRoot {
         public List<StreamingResult> results { get; set; }
     }
-
 
 }

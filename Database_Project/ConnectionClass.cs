@@ -485,7 +485,7 @@ namespace Database_Project {
             SQLiteConnection con = new SQLiteConnection(ConString);
             con.Open();
             String query = '"' + "%" + actor + "%" + '"';
-            SQLiteCommand sql = new SQLiteCommand("SELECT DISTINCT Title, Genre, Director, IMBDRating, MPAARating FROM Movie JOIN StarsIn ON Movie.MID = StarsIn.MID WHERE StarsIn.AID IN (SELECT AID FROM Actors WHERE Name LIKE " + query + ")", con);
+            SQLiteCommand sql = new SQLiteCommand("SELECT * FROM Movie JOIN StarsIn ON Movie.MID = StarsIn.MID WHERE StarsIn.AID IN (SELECT AID FROM Actors WHERE Name LIKE " + query + ")", con);
 
             try
             {
@@ -493,7 +493,7 @@ namespace Database_Project {
                 while (reader.Read())
                 {
                     DataRow dr = dt.NewRow();
-                    //dr["MID"] = int.Parse(reader["MiD"].ToString()); if you want to use this you need to put MID in the select part of the query statement on line 455
+                    dr["MID"] = int.Parse(reader["MiD"].ToString()); 
                     dr["Title"] = (String)reader["Title"];
                     dr["Genre"] = (String)reader["Genre"];
                     dr["Director"] = (String)reader["Director"];

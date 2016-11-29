@@ -399,9 +399,10 @@ namespace Database_Project {
             sqlConnection = new SQLiteConnection(ConString);
             sqlConnection.Open();
             String ServicsIDs = "SELECT Name FROM StreamsOn WHERE MID = @M_ID";
+            String betterQ = "select streamingservice.name, streamingservice.URL from streamingservice join streamson on streamingservice.name = streamson.name where MID = @M_ID";
 
             List<String> Services = new List<string>();
-            SQLiteCommand com = new SQLiteCommand(ServicsIDs, sqlConnection);
+            SQLiteCommand com = new SQLiteCommand(betterQ, sqlConnection);
             com.Parameters.AddWithValue("@M_ID", MID);
             SQLiteDataReader dr = com.ExecuteReader();
 
@@ -410,18 +411,19 @@ namespace Database_Project {
             while (dr.Read())
             {
                 String SName = (string)dr["Name"];
-                SQLiteCommand cmd = new SQLiteCommand(ServiceName, sqlConnection);
-                cmd.Parameters.AddWithValue("@nam", SName);
-                SQLiteDataReader drs = cmd.ExecuteReader();
-                drs.Read();
-                String URL = (string)drs["URL"];
+               // SQLiteCommand cmd = new SQLiteCommand(ServiceName, sqlConnection);
+                //cmd.Parameters.AddWithValue("@nam", SName);
+               // SQLiteDataReader drs = cmd.ExecuteReader();
+             //   drs.Read();
+                String URL = (string)dr["URL"];
 
-                cmd.Dispose();
-                drs.Close();
+                
+               // drs.Close();
 
                 Services.Add(SName + "," + URL);
 
             }
+            com.Dispose();
             dr.Close();
             return Services;
         }

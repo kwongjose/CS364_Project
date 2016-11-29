@@ -46,15 +46,35 @@ namespace Database_Project
         private void Streaming_Service_SelectedIndexChanged(object sender, EventArgs e)
         {
             String SS = Streaming_Service.Text;
+
+            ConnectionClass instance = new ConnectionClass();
+            DataTable dt = instance.getMoviesByStreamingService(SS);
+            Data.DataSource = dt;
+
         }
 
         /*
          * Search by Title or Actor
          * 
-         */ 
+         */
         private void Submit_Click(object sender, EventArgs e)
         {
             String Title_Actor = textBox1.Text;
+            
+            ConnectionClass instance = new ConnectionClass();
+            if (checkBox1.Checked)
+            {
+                DataTable dt = instance.getMoviesByActor(Title_Actor);
+                Data.DataSource = dt;
+            }
+            else
+            {
+                DataTable dt = instance.getMoviesByTitle(Title_Actor);
+                Data.DataSource = dt;
+            }
+
+           
+            Data.Columns["MID"].Visible = false;
         }
         
         /*

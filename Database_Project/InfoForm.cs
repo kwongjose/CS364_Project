@@ -17,24 +17,31 @@ namespace Database_Project
             InitializeComponent();
             ConnectionClass con = new ConnectionClass();
             Movie mov = con.GetMovieByID(MID);
-            
 
-            titleOfMovie.Text = mov.Title;
-            movieGenre.Text = mov.Genre;
-            mainActor.Text = mov.Actors;
-            descriptionOfMovie.Text = mov.Plot;
-            ratingOfMovie.Text = mov.imdbRating + " " + mov.Rated;
-            
+            //titleOfMovie.Text = mov.Title;
+            //movieGenre.Text = mov.Genre;
+            //mainActor.Text = mov.Actors;
+            //descriptionOfMovie.Text = mov.Plot;
+            //ratingOfMovie.Text = mov.imdbRating + " " + mov.Rated;
+            movieTitle.Text = mov.Title;
+            genreLabel.Text = mov.Genre;
+            descriptionOfMovie.Text = "Starring: " + mov.Actors.Replace(",", ", ").TrimEnd(',', ' ') + "\r\n\r\n\r\n" + mov.Plot;
+            ratingsLabel.Text = "Rated " + mov.Rated + "          IMDB Rating: " + mov.imdbRating + "/10";
+
+            this.Text = mov.Title; //Set form text to the  movie title
+            focusScapegoat.Focus(); //Sets the focus on a hidden text box (for design purposes)
+
             buildServiceTable( con.GetServicesByID(MID) );
         }
 
         private void InfoForm_Load(object sender, EventArgs e)
         {
+         /*  -----is this necessary?---------
             String title = titleOfMovie.Text;
             String actor = mainActor.Text;
             String genre = movieGenre.Text;
             String rating = ratingOfMovie.Text;
-            String description = descriptionOfMovie.Text;
+            String description = descriptionOfMovie.Text; */
         }
         /*
          * takes a list of string in the form name,url
@@ -57,7 +64,6 @@ namespace Database_Project
                     dt.Rows.Add(dr);
 
                 }
-                
             }
             else
             {

@@ -12,6 +12,8 @@ namespace Database_Project
 {
     public partial class Main : Form
     {
+        DataTable movieGrid;
+
         public Main()
         {
             InitializeComponent();
@@ -120,17 +122,21 @@ namespace Database_Project
         private void Main_Load(object sender, EventArgs e)
         {
             // load movie data into grid
-            loadMovieGrid();
+            loadMovieGrid(true);
         }
 
         //loads movie data into dataGridView Data
-        private void loadMovieGrid()
+        //parameter initial load specifies whether this is the inital load of the gridview
+        private void loadMovieGrid(bool initialLoad)
         {
-            ConnectionClass connect = new ConnectionClass();
-            connect.addMovieWithTitle("Elf");
+            if (initialLoad)
+            {
+                ConnectionClass connect = new ConnectionClass();
 
-            Data.DataSource = connect.loadMovieData();
-            
+                movieGrid = connect.loadMovieData();
+            }
+
+            Data.DataSource = movieGrid;
             
 
             //hide certain columns if they exist
@@ -149,11 +155,15 @@ namespace Database_Project
 
         /*
          * Calls the DB and repopulates the gridview
-         * 
+         * Resets all search fields
          */ 
         private void reset_view_Click(object sender, EventArgs e)
         {
-            loadMovieGrid();
+            loadMovieGrid(false);
+            Genres.ResetText();
+            Streaming_Service.ResetText();
+            textBox1.ResetText();
+            checkBox1.Checked = false;
         }
     }
 }

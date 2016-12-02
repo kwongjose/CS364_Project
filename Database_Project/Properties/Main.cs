@@ -72,6 +72,8 @@ namespace Database_Project
         private void loadMovieGrid()
         {
             ConnectionClass connect = new ConnectionClass();
+            connect.addMovieWithTitle("Elf");
+
             Data.DataSource = connect.loadMovieData();
             connect.close();
             

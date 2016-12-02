@@ -33,6 +33,12 @@ namespace Database_Project
             {
                 dt = dr.CopyToDataTable();
             }
+            else
+            {
+                DataRow dts = dt.NewRow();
+                dt.Rows.Clear();
+                dt.Rows.Add(dts);
+            }
 
             Data.DataSource = dt;
             Data.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -65,11 +71,23 @@ namespace Database_Project
             if (checkBox1.Checked)
             {
                 DataTable dt = instance.getMoviesByActor(Title_Actor);
+                if(dt.Rows.Count <= 0)
+                {
+                    DataRow dr = dt.NewRow();
+                    dt.Rows.Clear();
+                    dt.Rows.Add(dr);
+                }
                 Data.DataSource = dt;
             }
             else
             {
                 DataTable dt = instance.getMoviesByTitle(Title_Actor);
+                if(dt.Rows.Count <= 0)
+                {
+                    DataRow dr = dt.NewRow();
+                    dt.Rows.Clear();
+                    dt.Rows.Add(dr);
+                }
                 Data.DataSource = dt;
             }
 

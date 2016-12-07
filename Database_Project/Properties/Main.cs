@@ -122,19 +122,16 @@ namespace Database_Project
         private void Main_Load(object sender, EventArgs e)
         {
             // load movie data into grid
-            loadMovieGrid(true);
+            loadMovieGrid();
         }
 
         //loads movie data into dataGridView Data
         //parameter initial load specifies whether this is the inital load of the gridview
-        private void loadMovieGrid(bool initialLoad)
+        private void loadMovieGrid()
         {
-            if (initialLoad)
-            {
-                ConnectionClass connect = new ConnectionClass();
+            ConnectionClass connect = new ConnectionClass();
 
-                movieGrid = connect.loadMovieData();
-            }
+            movieGrid = connect.loadMovieData();
 
             Data.DataSource = movieGrid;
             
@@ -159,9 +156,9 @@ namespace Database_Project
          */ 
         private void reset_view_Click(object sender, EventArgs e)
         {
-            loadMovieGrid(false);
-            Genres.ResetText();
-            Streaming_Service.ResetText();
+            loadMovieGrid();
+            Genres.Text = "Genres";
+            Streaming_Service.Text = "Streaming Service";
             textBox1.ResetText();
             checkBox1.Checked = false;
         }

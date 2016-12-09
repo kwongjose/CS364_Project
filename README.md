@@ -1,2 +1,2 @@
 # CS364_Project
-A project for organing media from differnt sources. Developed for CS364 
+A project for organizing media from different sources. Developed for CS 364
